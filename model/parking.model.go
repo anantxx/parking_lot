@@ -1,8 +1,8 @@
 package model
 
 type Parking struct {
-	totalSlot           int
-	isParkingLotCreated bool
-	allocatedSlot       int
-	slots               *Slot
+	TotalSlot           int
+	IsParkingLotCreated bool
+	AllocatedSlot       int
+	Slots               *Slot
 }

@@ -1,8 +1,8 @@
 package model
 
 type Slot struct {
-	prevSlot *Slot
-	car      *Car
-	position int
-	nextSlot *Slot
+	PrevSlot *Slot
+	Car      *Car
+	Position int
+	NextSlot *Slot
 }

@@ -11,8 +11,9 @@ func main() {
 
 	if len(flag.Args()) > 0 {
 		// ToDo: File Implement later
-		handler.ExecuteFile(flag.Args()[0])
+		handler.HandleFile(flag.Args()[0])
 		return
 	}
-	handler.ExecuteCommand()
+
+	handler.HandleCommand()
 }
