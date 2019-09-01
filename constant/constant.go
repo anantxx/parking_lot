@@ -9,8 +9,9 @@ var (
 	ERR_INVALID_COMMAND   = errors.New("Invalid Command")
 	ERR_NO_INITIALIZATION = errors.New("First needs to be creating Parking lot")
 	ERR_PARKING_FULL      = errors.New("Sorry, parking lot is full")
-
-	ERR_INVALID_ARGUMENT = errors.New("Invalid Argument")
+	ERR_NO_CAR_PARKED     = errors.New("No car parked")
+	ERR_CAR_NOT_FOUND     = errors.New("Car not found")
+	ERR_INVALID_ARGUMENT  = errors.New("Invalid Argument")
 )
 
 //Message

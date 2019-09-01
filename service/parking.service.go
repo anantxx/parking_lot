@@ -40,14 +40,13 @@ func (p *ParkingService) AllocateSlot(regNo string, colour string) (string, erro
 		return "", ERR_INVALID_ARGUMENT
 	}
 
-	if p.ParkingRepository.GetParking().TotalSlot == p.ParkingRepository.GetParking().AllocatedSlot {
+	if p.ParkingRepository.GetParking().TotalSlot <= p.ParkingRepository.GetParking().AllocatedSlot {
 		return "", ERR_PARKING_FULL
 	}
 
 	car := repository.NewCar(regNo, colour)
 	var pos int
 	if 0 == p.ParkingRepository.GetParking().AllocatedSlot {
-		fmt.Println("INISDE FIRST")
 		slot := repository.NewSlot(car, 1)
 		p.ParkingRepository.GetParking().Slots = slot
 		pos = slot.Position
@@ -57,4 +56,27 @@ func (p *ParkingService) AllocateSlot(regNo string, colour string) (string, erro
 	}
 	p.ParkingRepository.GetParking().AllocatedSlot++
 	return fmt.Sprintf("Allocated slot number: %d", pos), nil
+}
+
+func (p *ParkingService) ReleaseSlot(slotNo int) (string, error) {
+	if false == p.ParkingRepository.GetParking().IsParkingLotCreated {
+		return "", ERR_NO_INITIALIZATION
+	}
+
+	if p.ParkingRepository.GetParking().AllocatedSlot < 1 {
+		return "", ERR_NO_CAR_PARKED
+	}
+
+	realeaseSlot, err := p.SlotRepository.FindSlotBySlotNo(p.ParkingRepository.GetParking().Slots, slotNo)
+	if nil != err {
+		return "", err
+	}
+
+	err = p.SlotRepository.ReleaseSlot(realeaseSlot)
+	if nil != err {
+		return "", err
+	}
+	p.ParkingRepository.GetParking().AllocatedSlot--
+	return fmt.Sprintf("Slot number %d is free", realeaseSlot.Position), nil
+
 }

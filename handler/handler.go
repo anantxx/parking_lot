@@ -62,22 +62,20 @@ func ProcessCommand(parkingService service.ServicesInstance, arguments []string)
 			return "", err
 		}
 		return parkingService.InitializeLot(totalSlot)
-	//response = fmt.Sprintf("Created a parking lot with %d slots", parking.GetTotalSlot())
 	case PARK:
 		if len(arguments) < 2 {
 			return "", ERR_INSUFFICIENT_ARGS
 		}
-		//car := model.NewCar()
 		return parkingService.AllocateSlot(arguments[1], arguments[2])
 
-		/*case LEAVE:
-			if len(arguments) < 1 {
-				return "", ERR_INSUFFICIENT_ARGS
-			}
-			SlotNo, err := strconv.Atoi(arguments[1])
-			model.ReleaseParking(SlotNo)
+	case LEAVE:
+		if len(arguments) < 1 {
+			return "", ERR_INSUFFICIENT_ARGS
+		}
+		position, _ := strconv.Atoi(arguments[1])
+		return parkingService.ReleaseSlot(position)
 
-		case STATUS:
+		/*case STATUS:
 			model.ShowStatus()
 		case REG_NUM_FOR_CAR_WITH_COL:
 			model.FindRegistationNosByColour()

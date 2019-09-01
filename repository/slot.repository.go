@@ -1,8 +1,7 @@
 package repository
 
 import (
-	"fmt"
-
+	"github.com/parking_lot/constant"
 	"github.com/parking_lot/model"
 )
 
@@ -24,7 +23,6 @@ func NewSlot(car *model.Car, pos int) *model.Slot {
 
 func (s SlotRepository) AddNewSlot(currSlot *model.Slot, newSlot *model.Slot) int {
 	if nil == currSlot.NextSlot {
-		fmt.Println("INISDE FIRST 1")
 		pos := currSlot.Position + 1
 		newSlot.Position = pos
 		currSlot.NextSlot = newSlot
@@ -33,7 +31,6 @@ func (s SlotRepository) AddNewSlot(currSlot *model.Slot, newSlot *model.Slot) in
 	}
 
 	if currSlot.NextSlot.Position > (currSlot.Position + 1) {
-		fmt.Println("INISDE FIRST 2")
 		pos := currSlot.Position + 1
 		newSlot.Position = pos
 		currentNext := currSlot.NextSlot
@@ -44,4 +41,27 @@ func (s SlotRepository) AddNewSlot(currSlot *model.Slot, newSlot *model.Slot) in
 		return pos
 	}
 	return s.AddNewSlot(currSlot.NextSlot, newSlot)
+}
+
+func (s SlotRepository) FindSlotBySlotNo(currentSlot *model.Slot, position int) (slot *model.Slot, err error) {
+	if position == currentSlot.Position {
+		return currentSlot, nil
+	}
+
+	if nil == currentSlot.NextSlot {
+		return nil, constant.ERR_CAR_NOT_FOUND
+	}
+
+	return s.FindSlotBySlotNo(currentSlot.NextSlot, position)
+}
+
+func (s SlotRepository) ReleaseSlot(slot *model.Slot) (err error) {
+	if slot.PrevSlot != nil {
+		slot.PrevSlot.NextSlot = slot.NextSlot
+	}
+	if slot.NextSlot != nil {
+		slot.NextSlot.PrevSlot = slot.PrevSlot
+	}
+	slot = nil
+	return err
 }
