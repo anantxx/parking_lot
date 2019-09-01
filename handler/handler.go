@@ -39,7 +39,8 @@ func HandleCommand() {
 		}
 		parkingModel := repository.GetInstance()
 		parkingRepo := repository.NewParkingRepository(parkingModel)
-		parkingService := service.NewParkingService(parkingRepo)
+		slotRepo := repository.NewSlotRepository()
+		parkingService := service.NewParkingService(parkingRepo, slotRepo)
 		res, err := ProcessCommand(parkingService, arguments)
 		if err != nil {
 			fmt.Println(err)

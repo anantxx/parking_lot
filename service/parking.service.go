@@ -10,10 +10,14 @@ import (
 
 type ParkingService struct {
 	ParkingRepository repository.RepositoryInstance
+	SlotRepository    repository.SlotRepositoryInstance
 }
 
-func NewParkingService(parkingRepo repository.RepositoryInstance) *ParkingService {
-	return &ParkingService{ParkingRepository: parkingRepo}
+func NewParkingService(parkingRepo repository.RepositoryInstance, slotRepo repository.SlotRepositoryInstance) *ParkingService {
+	return &ParkingService{
+		ParkingRepository: parkingRepo,
+		SlotRepository:    slotRepo,
+	}
 }
 
 func (p *ParkingService) InitializeLot(totalSlot int) (string, error) {
@@ -41,11 +45,16 @@ func (p *ParkingService) AllocateSlot(regNo string, colour string) (string, erro
 	}
 
 	car := repository.NewCar(regNo, colour)
-
+	var pos int
 	if 0 == p.ParkingRepository.GetParking().AllocatedSlot {
+		fmt.Println("INISDE FIRST")
 		slot := repository.NewSlot(car, 1)
 		p.ParkingRepository.GetParking().Slots = slot
-		return fmt.Sprintf("Allocated slot number: %d", slot.Position), nil
+		pos = slot.Position
+	} else {
+		newSlot := repository.NewSlot(car, 0)
+		pos = p.SlotRepository.AddNewSlot(p.ParkingRepository.GetParking().Slots, newSlot)
 	}
-	return "", nil
+	p.ParkingRepository.GetParking().AllocatedSlot++
+	return fmt.Sprintf("Allocated slot number: %d", pos), nil
 }

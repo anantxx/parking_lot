@@ -12,3 +12,7 @@ type RepositoryInstance interface {
 		FindAllocatedSlotByColour(string) (string, error)
 		FindSlotByRegistationNo(string) (string, error)*/
 }
+
+type SlotRepositoryInstance interface {
+	AddNewSlot(*model.Slot, *model.Slot) int
+}
