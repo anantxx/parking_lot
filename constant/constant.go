@@ -10,7 +10,7 @@ var (
 	ERR_NO_INITIALIZATION = errors.New("First needs to be creating Parking lot")
 	ERR_PARKING_FULL      = errors.New("Sorry, parking lot is full")
 	ERR_NO_CAR_PARKED     = errors.New("No car parked")
-	ERR_CAR_NOT_FOUND     = errors.New("Car not found")
+	ERR_CAR_NOT_FOUND     = errors.New("Not found")
 	ERR_INVALID_ARGUMENT  = errors.New("Invalid Argument")
 )
 

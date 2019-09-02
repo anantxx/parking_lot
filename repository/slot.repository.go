@@ -65,3 +65,27 @@ func (s SlotRepository) ReleaseSlot(slot *model.Slot) (err error) {
 	slot = nil
 	return err
 }
+
+func (s SlotRepository) FindAllSlot(slot *model.Slot) []model.Slot {
+	if slot == nil {
+		return []model.Slot{}
+	}
+	return append([]model.Slot{*slot}, s.FindAllSlot(slot.NextSlot)...)
+}
+
+func (s SlotRepository) FindSlotsByFeild(slot *model.Slot, value string, feild string) []model.Slot {
+	if slot == nil {
+		return []model.Slot{}
+	}
+	if "colour" == feild {
+		if value == slot.Car.Colour {
+			return append([]model.Slot{*slot}, s.FindSlotsByFeild(slot.NextSlot, value, feild)...)
+		}
+	} else if "registration_number" == feild {
+		if value == slot.Car.RegistrationNo {
+			return append([]model.Slot{*slot}, s.FindSlotsByFeild(slot.NextSlot, value, feild)...)
+		}
+	}
+
+	return s.FindSlotsByFeild(slot.NextSlot, value, feild)
+}

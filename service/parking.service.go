@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	. "github.com/parking_lot/constant"
+	"github.com/parking_lot/model"
 	"github.com/parking_lot/repository"
 )
 
@@ -79,4 +80,85 @@ func (p *ParkingService) ReleaseSlot(slotNo int) (string, error) {
 	p.ParkingRepository.GetParking().AllocatedSlot--
 	return fmt.Sprintf("Slot number %d is free", realeaseSlot.Position), nil
 
+}
+
+func (p *ParkingService) ShowStatus() (string, error) {
+	if false == p.ParkingRepository.GetParking().IsParkingLotCreated {
+		return "", ERR_NO_INITIALIZATION
+	}
+
+	if p.ParkingRepository.GetParking().AllocatedSlot < 1 {
+		return "", ERR_NO_CAR_PARKED
+	}
+
+	slots := p.SlotRepository.FindAllSlot(p.ParkingRepository.GetParking().Slots)
+	response := fmt.Sprintf("Slot No.\tRegistration No\tColor")
+	for _, slot := range slots {
+		response += fmt.Sprintf("\n%d\t\t%s\t%s", slot.Position, slot.Car.RegistrationNo, slot.Car.Colour)
+	}
+	return response, nil
+}
+
+func (p *ParkingService) FindSlotByFeild(colour string, feild string) ([]model.Slot, error) {
+	if false == p.ParkingRepository.GetParking().IsParkingLotCreated {
+		return []model.Slot{}, ERR_NO_INITIALIZATION
+	}
+
+	if p.ParkingRepository.GetParking().AllocatedSlot < 1 {
+		return []model.Slot{}, ERR_NO_CAR_PARKED
+	}
+
+	slots := p.SlotRepository.FindSlotsByFeild(p.ParkingRepository.GetParking().Slots, colour, feild)
+	if len(slots) < 1 {
+		return []model.Slot{}, ERR_CAR_NOT_FOUND
+	}
+	return slots, nil
+}
+
+func (p *ParkingService) FindRegistationNosByColour(colour string) (string, error) {
+	slots, err := p.FindSlotByFeild(colour, "colour")
+	if nil != err {
+		return "", err
+	}
+	var response string
+	for _, slot := range slots {
+		if "" == response {
+			response += fmt.Sprintf("%s", slot.Car.RegistrationNo)
+		} else {
+			response += fmt.Sprintf(", %s", slot.Car.RegistrationNo)
+		}
+	}
+	return response, nil
+}
+
+func (p *ParkingService) FindAllocatedSlotByColour(colour string) (string, error) {
+	slots, err := p.FindSlotByFeild(colour, "colour")
+	if nil != err {
+		return "", err
+	}
+	var response string
+	for _, slot := range slots {
+		if "" == response {
+			response += fmt.Sprintf("%d", slot.Position)
+		} else {
+			response += fmt.Sprintf(", %d", slot.Position)
+		}
+	}
+	return response, nil
+}
+
+func (p *ParkingService) FindSlotByRegistationNo(regNo string) (string, error) {
+	slots, err := p.FindSlotByFeild(regNo, "registration_number")
+	if nil != err {
+		return "", err
+	}
+	var response string
+	for _, slot := range slots {
+		if "" == response {
+			response += fmt.Sprintf("%d", slot.Position)
+		} else {
+			response += fmt.Sprintf(", %d", slot.Position)
+		}
+	}
+	return response, nil
 }

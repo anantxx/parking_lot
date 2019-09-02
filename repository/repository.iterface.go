@@ -17,4 +17,6 @@ type SlotRepositoryInstance interface {
 	AddNewSlot(*model.Slot, *model.Slot) int
 	FindSlotBySlotNo(*model.Slot, int) (*model.Slot, error)
 	ReleaseSlot(*model.Slot) error
+	FindAllSlot(*model.Slot) []model.Slot
+	FindSlotsByFeild(*model.Slot, string, string) []model.Slot
 }

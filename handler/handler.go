@@ -75,17 +75,25 @@ func ProcessCommand(parkingService service.ServicesInstance, arguments []string)
 		position, _ := strconv.Atoi(arguments[1])
 		return parkingService.ReleaseSlot(position)
 
-		/*case STATUS:
-			model.ShowStatus()
-		case REG_NUM_FOR_CAR_WITH_COL:
-			model.FindRegistationNosByColour()
-		case SLOT_NUM_FOR_CAR_WITH_COL:
-			model.FindAllocatedSlotByColour()
-		case SLOT_NUM_FOR_REG_NUM:
-			model.FindSlotByRegistationNos()
-		default:
-			return "", ERR_INVALID_COMMAND
-		*/
+	case STATUS:
+		return parkingService.ShowStatus()
+	case REG_NUM_FOR_CAR_WITH_COL:
+		if len(arguments) < 1 {
+			return "", ERR_INSUFFICIENT_ARGS
+		}
+		return parkingService.FindRegistationNosByColour(arguments[1])
+	case SLOT_NUM_FOR_CAR_WITH_COL:
+		if len(arguments) < 1 {
+			return "", ERR_INSUFFICIENT_ARGS
+		}
+		return parkingService.FindAllocatedSlotByColour(arguments[1])
+	case SLOT_NUM_FOR_REG_NUM:
+		if len(arguments) < 1 {
+			return "", ERR_INSUFFICIENT_ARGS
+		}
+		return parkingService.FindSlotByRegistationNo(arguments[1])
+	default:
+		return "", ERR_INVALID_COMMAND
 	}
 	return response, err
 }
