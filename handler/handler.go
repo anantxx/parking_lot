@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	. "github.com/parking_lot/constant"
+	logs "github.com/parking_lot/log"
 	"github.com/parking_lot/repository"
 	"github.com/parking_lot/service"
 )
@@ -50,13 +51,14 @@ func HandleCommand() {
 func processCommand(input string) bool {
 	input = strings.TrimRight(input, "\r\n")
 	arguments := []string{}
+	logger := logs.NewFmtIOLog()
 	for _, s := range strings.Split(input, " ") {
 		if s != "" {
 			arguments = append(arguments, s)
 		}
 	}
 	if len(arguments) < 1 {
-		fmt.Println(ERR_NO_ARGS)
+		logger.Log("", ERR_NO_ARGS)
 		return true
 	}
 	if strings.ToLower(arguments[0]) == "exit" {
@@ -67,11 +69,7 @@ func processCommand(input string) bool {
 	slotRepo := repository.NewSlotRepository()
 	parkingService := service.NewParkingService(parkingRepo, slotRepo)
 	res, err := executeCommand(parkingService, arguments)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(res)
-	}
+	logger.Log(res, err)
 	return true
 }
 
