@@ -29,7 +29,8 @@ func (p ParkingRepository) GetParking() *model.Parking {
 }
 
 
-func (p ParkingRepository) InitializeLot(totalSlot int) {
+func (p ParkingRepository) InitializeLot(totalSlot int)(error) {
 	p.Parking.TotalSlot = totalSlot
 	p.Parking.IsParkingLotCreated = true
+	return nil
 }

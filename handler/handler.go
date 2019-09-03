@@ -2,7 +2,6 @@ package handler
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -86,7 +85,6 @@ func executeCommand(parkingService service.ServicesInstance, arguments []string)
 		}
 		return parkingService.InitializeLot(totalSlot)
 	case PARK:
-		fmt.Println(len(arguments))
 		if len(arguments) < 3 {
 			return "", ERR_INSUFFICIENT_ARGS
 		}
