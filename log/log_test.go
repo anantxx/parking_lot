@@ -23,7 +23,7 @@ func TestNewFmtIOLog(t *testing.T) {
 			t.Helper()
 			output := logObj.Log(test.response, test.err)
 			if test.expected != output {
-				t.Errorf("OutPut is not marched with expected")
+				t.Errorf("OutPut is not matched with expected")
 			}
 		})
 	}

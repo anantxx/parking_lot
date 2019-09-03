@@ -135,11 +135,11 @@ func TestInitializeLot(t *testing.T) {
 			t.Helper()
 			output, err = parSerObj.InitializeLot(test.input)
 			if test.expected != output {
-				t.Errorf("Output %s is not marched with expected %s", output, test.expected)
+				t.Errorf("Output %s is not matched with expected %s", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Output  is not marched with expected ")
+					t.Errorf("Output  is not matched with expected ")
 				}
 			}
 		})
@@ -187,11 +187,11 @@ func TestAllocateSlot(t *testing.T) {
 
 			output, err = parSerObj.AllocateSlot(test.regNo, test.colour)
 			if test.expected != output {
-				t.Errorf("Output %s is not marched with expected %s", output, test.expected)
+				t.Errorf("Output %s is not matched with expected %s", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Output  is not marched with expected ")
+					t.Errorf("Output  is not matched with expected ")
 				}
 			}
 		})
@@ -238,11 +238,11 @@ func TestReleaseSlot(t *testing.T) {
 
 			output, err = parSerObj.ReleaseSlot(test.position)
 			if test.expected != output {
-				t.Errorf("Output `%s` is not marched with expected `%s`", output, test.expected)
+				t.Errorf("Output `%s` is not matched with expected `%s`", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Error: Output `%s` is not marched with expected `%s`", err.Error(), test.expectedErr.Error())
+					t.Errorf("Error: Output `%s` is not matched with expected `%s`", err.Error(), test.expectedErr.Error())
 				}
 			}
 		})
@@ -288,11 +288,11 @@ func TestShowStatus(t *testing.T) {
 
 			output, err = parSerObj.ShowStatus()
 			if test.expected != output {
-				t.Errorf("Output `%s` is not marched with expected `%s`", output, test.expected)
+				t.Errorf("Output `%s` is not matched with expected `%s`", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Error: Output `%s` is not marched with expected `%s`", err.Error(), test.expectedErr.Error())
+					t.Errorf("Error: Output `%s` is not matched with expected `%s`", err.Error(), test.expectedErr.Error())
 				}
 			}
 		})
@@ -334,11 +334,11 @@ func TestFindRegistationNosByColour(t *testing.T) {
 
 			output, err = parSerObj.FindRegistationNosByColour(test.colour)
 			if test.expected != output {
-				t.Errorf("Output `%s` is not marched with expected `%s`", output, test.expected)
+				t.Errorf("Output `%s` is not matched with expected `%s`", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Error: Output `%s` is not marched with expected `%s`", err.Error(), test.expectedErr.Error())
+					t.Errorf("Error: Output `%s` is not matched with expected `%s`", err.Error(), test.expectedErr.Error())
 				}
 			}
 		})
@@ -380,11 +380,11 @@ func TestFindAllocatedSlotByColour(t *testing.T) {
 
 			output, err = parSerObj.FindAllocatedSlotByColour(test.colour)
 			if test.expected != output {
-				t.Errorf("Output `%s` is not marched with expected `%s`", output, test.expected)
+				t.Errorf("Output `%s` is not matched with expected `%s`", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Error: Output `%s` is not marched with expected `%s`", err.Error(), test.expectedErr.Error())
+					t.Errorf("Error: Output `%s` is not matched with expected `%s`", err.Error(), test.expectedErr.Error())
 				}
 			}
 		})
@@ -427,11 +427,11 @@ func TestFindSlotByRegistationNo(t *testing.T) {
 
 			output, err = parSerObj.FindSlotByRegistationNo(test.regNo)
 			if test.expected != output {
-				t.Errorf("Output `%s` is not marched with expected `%s`", output, test.expected)
+				t.Errorf("Output `%s` is not matched with expected `%s`", output, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Error: Output `%s` is not marched with expected `%s`", err.Error(), test.expectedErr.Error())
+					t.Errorf("Error: Output `%s` is not matched with expected `%s`", err.Error(), test.expectedErr.Error())
 				}
 			}
 		})
@@ -487,11 +487,11 @@ func TestFindSlotByFeild(t *testing.T) {
 				}
 			}
 			if test.expected != position {
-				t.Errorf("Output `%s` is not marched with expected `%s`", position, test.expected)
+				t.Errorf("Output `%s` is not matched with expected `%s`", position, test.expected)
 			}
 			if err != nil && test.expectedErr != nil {
 				if test.expectedErr.Error() != err.Error() {
-					t.Errorf("Error: Output `%s` is not marched with expected `%s`", err.Error(), test.expectedErr.Error())
+					t.Errorf("Error: Output `%s` is not matched with expected `%s`", err.Error(), test.expectedErr.Error())
 				}
 			}
 		})
