@@ -5,6 +5,8 @@ Implementation of automated parking lot.
 Language : GoLang
 Version : go1.12.1
 
+##### It is necessary that the code should be placed in $GOPATH/src/github.com/ folder.
+
 ## Problem Statement
  
 I own a parking lot that can hold up to 'n' cars at any given point in time. Each slot is
