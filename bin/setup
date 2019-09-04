@@ -1,0 +1,13 @@
+#Check Go version (Go install)
+go version
+
+#echo $(pwd)
+export GOPATH=$HOME/go
+
+go clean 
+
+# Build/Compile Code base
+go build -o bin/parking_lot -a
+
+#Run Test Suit to validate
+go test ./... -cover
